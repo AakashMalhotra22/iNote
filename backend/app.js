@@ -1,7 +1,11 @@
  const express = require('express');
  const connectDB = require('./db/connect');
  require('dotenv').config()
+ const router = require('./routes/main');
  const app = express();
+
+
+app.use('/api/v1',router);
 
 app.get('/',(req,res)=>
 {
