@@ -1,16 +1,18 @@
+require('dotenv').config()
+require('express-async-errors');
+ 
  const express = require('express');
- const connectDB = require('./db/connect');
- require('dotenv').config()
- const router = require('./routes/main');
  const app = express();
 
+ const connectDB = require('./db/connect');
+ const router = require('./routes/main');
+ const errorMiddleware = require('./middleware/error-handler');
 
+
+app.use(express.json());
 app.use('/api/v1',router);
+app.use(errorMiddleware);
 
-app.get('/',(req,res)=>
-{
-    res.send("hi");
-})
 
 
 const port =3000;
