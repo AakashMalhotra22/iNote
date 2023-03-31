@@ -44,6 +44,38 @@ router.route('/createuser').post([
     res.json({"message":"user is created", "details":req.body, "Encrypted password": secPass});
 })
 
+router.route('/login').post([
+    body('email', 'Enter a valid email').isEmail(),
+    body('password','Password cannot be blank').exists(),
+],async (req,res)=>
+{
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) throw errors;
+
+    const {email,password} = req.body;
+
+    let user = await User.findOne({email:req.body.email});
+    if(!user)
+    {
+        return res.status(400).send("User already exists");
+    }
+    const passwordCompare = await bcrypt.compare(password,user.password);
+    if(!passwordCompare)
+    {
+        return res.status(400).send("Wrong Password");
+    }
+
+    const data =
+    {
+        user:
+        {
+            id:user.id
+        }
+    }
+    const authtoken = jwt.sign(data,JWT_SECRET);
+    res.json({'welcome':"you made it", authtoken});
+})
+
 router.route('/notes').get((req,res)=>
 {
     res.send("Welcome to notes");
