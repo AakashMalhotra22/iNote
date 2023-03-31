@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
+
+const fetchuser = require('../middleware/fetchuser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET ='Harryisagoodb$oy'
 
 router.route('/createuser').post([
     body('name').isLength({min:3}),
@@ -38,7 +39,7 @@ router.route('/createuser').post([
             id:user.id
         }
     }
-    const authtoken = jwt.sign(data,JWT_SECRET);
+    const authtoken = jwt.sign(data,process.env.JWT_SECRET);
     console.log(authtoken);
 
     res.json({"message":"user is created", "details":req.body, "Encrypted password": secPass});
@@ -72,13 +73,15 @@ router.route('/login').post([
             id:user.id
         }
     }
-    const authtoken = jwt.sign(data,JWT_SECRET);
+    const authtoken = jwt.sign(data,process.env.JWT_SECRET);
     res.json({'welcome':"you made it", authtoken});
 })
-
-router.route('/notes').get((req,res)=>
+//Route3: 
+router.route('/getuser').post(fetchuser, async (req,res)=>
 {
-    res.send("Welcome to notes");
+    const userId = req.user.id;
+    const user = await User.findById(userId).select("-password");
+    res.send(user);
 })
 
 module.exports = router;
