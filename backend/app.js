@@ -1,19 +1,18 @@
 require('dotenv').config()
 require('express-async-errors');
  
- const express = require('express');
- const app = express();
+const express = require('express');
+const app = express();
 
- const connectDB = require('./db/connect');
- const router = require('./routes/main');
- const errorMiddleware = require('./middleware/error-handler');
-
+const connectDB = require('./db/connect');
+const router = require('./routes/main');
+const router1 = require('./routes/Notes_route');
+const errorMiddleware = require('./middleware/error-handler');
 
 app.use(express.json());
-app.use('/api/v1',router);
+app.use('/api/v1/auth',router);
+app.use('/api/v1/notes',router1);
 app.use(errorMiddleware);
-
-
 
 const port =5000;
 const start = async ()=>
