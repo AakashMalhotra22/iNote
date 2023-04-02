@@ -11,6 +11,7 @@ import {
   Route
 } from "react-router-dom";
 import NoteState from './Context/notes/NoteState';
+import Alert from './Components/Alert';
 
 function App() {
   return (
@@ -19,7 +20,9 @@ function App() {
     
     
         <Router>
-        <Navbar />
+         
+        <Navbar/>
+        <Alert message = "This is amazing app"/>
         
         
         <Routes>
