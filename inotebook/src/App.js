@@ -17,14 +17,10 @@ function App() {
   return (
     <>
     <NoteState>
-    
-    
         <Router>
-         
         <Navbar/>
         <Alert message = "This is amazing app"/>
-        
-        
+
         <Routes>
           <Route path="/home" element={<Home/>}/>
           <Route path ="/about" element = {<About/>}/>
@@ -32,7 +28,7 @@ function App() {
         </Routes> 
 
         </Router> 
-        </NoteState>
+    </NoteState>
     </>
   );
 }
