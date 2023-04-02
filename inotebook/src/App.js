@@ -2,16 +2,18 @@ import './App.css';
 import React from 'react';
 
 import Navbar from './Components/Navbar';
-import About from './Components/About'
+
 import Home from './Components/Home'
 
 import {
   HashRouter as Router,
   Routes,
-  Route
+  Route,
+  useNavigate
 } from "react-router-dom";
 import NoteState from './Context/notes/NoteState';
-import Alert from './Components/Alert';
+import Login from './Components/Login';
+import Signup from './Components/Signup';
 
 function App() {
   return (
@@ -19,11 +21,11 @@ function App() {
     <NoteState>
         <Router>
         <Navbar/>
-        <Alert message = "This is amazing app"/>
 
         <Routes>
           <Route path="/home" element={<Home/>}/>
-          <Route path ="/about" element = {<About/>}/>
+          <Route path ="/login" element ={<Login/>}/>
+          <Route path ="/signup" element ={<Signup/>}/>
         
         </Routes> 
 

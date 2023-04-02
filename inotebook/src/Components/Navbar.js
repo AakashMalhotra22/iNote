@@ -1,13 +1,19 @@
-import React  from 'react'
-import {Link} from "react-router-dom";
+import React from 'react'
+import { Link } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const nav = () => {
 
+const Navbar = () =>
+ {
+  const navigate = useNavigate();
+  const handleLogout =()=>
+  {
+    localStorage.removeItem('token');
+    navigate("/login");
+  }
   
   return (
     <>
-      
-
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">iNotes</Link>
@@ -19,11 +25,12 @@ const nav = () => {
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/about">About</Link>
-              </li>
 
             </ul>
+            {!localStorage.getItem('token')?<form className="d-flex">
+              <Link className="btn btn-primary mx-2" to="/login" role="button">Login</Link>
+              <Link className="btn btn-primary mx-2" to="/signup" role="button">Signup</Link>
+            </form>: <button onClick={handleLogout} className="btn btn-primary"> Logout</button>}
           </div>
         </div>
       </nav>
@@ -31,4 +38,4 @@ const nav = () => {
   )
 }
 
-export default nav
+export default Navbar
